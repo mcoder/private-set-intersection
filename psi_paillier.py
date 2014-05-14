@@ -1,4 +1,6 @@
-from charm.toolbox.integergroup import random, integer
+import random as pyrandom
+
+from charm.toolbox.integergroup import random
 
 from pkenc_paillier import Paillier
 
@@ -32,8 +34,15 @@ class PSI(object):
 
 
 def test():
-    set_a = [1, 2, 3, 5, 6, 10, 11, 12, 13, 16, 18, 19, 20, 22, 23, 24, 25, 26, 28, 30]
-    set_b = [3, 4, 16, 17, 21, 22, 24, 27, 29, 32, 38, 39, 42, 44, 47, 50, 51, 55, 59, 60]
+    set_len = 50
+    set_int_len = 10
+    set_a = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
+    set_b = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + set_a[:set_int_len]
+
+    print('a: {0}'.format(sorted(set_a)))
+    print('b: {0}'.format(sorted(set_b)))
+    print('a & b: {0}'.format(sorted(set(set_a) & set(set_b))))
+    print
 
     psi = PSI()
 
@@ -41,7 +50,7 @@ def test():
     out_b = psi.b_to_a(set_b, **out_a_1)
     a_out_2 = psi.a_to_b_2(out_b, **state_a)
 
-    print(a_out_2)
+    print('output: {0}'.format(sorted(a_out_2)))
 
 
 if __name__ == '__main__':

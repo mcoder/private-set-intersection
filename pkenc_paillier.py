@@ -63,6 +63,7 @@ def test_paillier():
 
     print(str(m), str(d))
 
+
 def test_ops():
     a = integer(3, 23)
     s = integer(-1, 23)
