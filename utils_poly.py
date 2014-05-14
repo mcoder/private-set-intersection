@@ -1,4 +1,4 @@
-from charm.core.math.integer import integer
+from charm.toolbox.integergroup import integer
 
 
 def poly_eval(coefs, x):
