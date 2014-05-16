@@ -1,10 +1,7 @@
 import random as pyrandom
-
-from charm.toolbox.integergroup import random
-
+from charm.toolbox.integergroup import random, integer
 from pkenc_paillier import Paillier
-
-from utils_poly import *
+from utils_poly import poly_eval, poly_eval_horner, poly_from_roots
 
 
 class PSI(object):
@@ -12,7 +9,8 @@ class PSI(object):
         enc_scheme = Paillier()
         pk, sk = enc_scheme.keygen(1024)
 
-        coefs = poly_from_roots(set_a)
+        set_a_mapped = [integer(a, pk['n']) for a in set_a]
+        coefs = poly_from_roots(set_a_mapped, integer(-1, pk['n']), integer(1, pk['n']))
         coef_cts = [enc_scheme.encrypt(pk, c) for c in coefs]
 
         state_a = {'pk': pk, 'sk': sk, 'set_a': set_a}

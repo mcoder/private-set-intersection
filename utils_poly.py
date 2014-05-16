@@ -15,18 +15,19 @@ def poly_eval_horner(coefs, x):
     return out
 
 
-def poly_mul(coefs1, coefs2):
-    coefs3 = [0] * (len(coefs1) + len(coefs2) - 1)
+def poly_mul(coefs1, coefs2, zero):
+    coefs3 = [zero] * (len(coefs1) + len(coefs2) - 1)
     for i in range(len(coefs1)):
         for j in range(len(coefs2)):
             coefs3[i + j] += coefs1[i] * coefs2[j]
     return coefs3
 
 
-def poly_from_roots(roots):
-    coefs = [-1 * roots[0], 1]
+def poly_from_roots(roots, neg_one, one):
+    zero = one + neg_one
+    coefs = [neg_one * roots[0], one]
     for r in roots[1:]:
-        coefs = poly_mul(coefs, [-1 * r, 1])
+        coefs = poly_mul(coefs, [neg_one * r, one], zero)
     return coefs
 
 
@@ -56,12 +57,12 @@ def poly_coef_to_str(coef, degree):
 def test_poly():
     coefs1 = map(integer, [-1, -2])
     coefs2 = [3, 4]
-    coefs3 = poly_mul(coefs1, coefs2)
+    coefs3 = poly_mul(coefs1, coefs2, 0)
     poly_print(coefs3)
 
     roots = [2, 3, 4, 5]
     roots = map(integer, roots)
-    coefs = poly_from_roots(roots)
+    coefs = poly_from_roots(roots, 1, -1)
     eval1 = poly_eval(coefs, 3)
     eval2 = poly_eval_horner(coefs, 3)
     poly_print(coefs)

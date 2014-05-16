@@ -57,7 +57,7 @@ def test_paillier():
     c = enc_scheme.encrypt(pk, m)
     c1 = c * (2 ** 2) + 0
     c1 = c1 * (2 ** 2) + c1
-    c1.c = c1.c * ((c1.pk['n2'] - 1) % c1.pk['n2'])
+    c1.c *= ((c1.pk['n2'] - 1) % c1.pk['n2'])
 
     d = enc_scheme.decrypt(pk, sk, c1)
 
@@ -71,5 +71,5 @@ def test_ops():
 
 
 if __name__ == '__main__':
-    #test_paillier()
+    test_paillier()
     test_ops()
