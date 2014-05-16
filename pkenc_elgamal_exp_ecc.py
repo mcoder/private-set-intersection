@@ -19,9 +19,14 @@ class ElGamal(object):
         c2 = (h ** y) * (g ** (m % order))
         return Cipher(c1, c2, pk)
 
-    def encrypts_zero(self, sk, c):
+    def encrypts_zero(self, pk, sk, c):
         x = sk['x']
         return c.c2 == c.c1 ** x
+
+    def encrypts_one(self, pk, sk, c):
+        g = pk['g']
+        x = sk['x']
+        return c.c2 == (c.c1 ** x) * g
 
 
 class Cipher(object):
@@ -52,10 +57,13 @@ def test_elgamal():
     c4 = enc_scheme.encrypt(pk, 4)
     c5 = c1 * 2 + c4
 
-    print(enc_scheme.encrypts_zero(sk, c1))
-    print(enc_scheme.encrypts_zero(sk, c2))
-    print(enc_scheme.encrypts_zero(sk, c3))
-    print(enc_scheme.encrypts_zero(sk, c5))
+    print(enc_scheme.encrypts_zero(pk, sk, c1))
+    print(enc_scheme.encrypts_zero(pk, sk, c2))
+    print(enc_scheme.encrypts_zero(pk, sk, c3))
+    print(enc_scheme.encrypts_zero(pk, sk, c5))
+
+    print(enc_scheme.encrypts_one(pk, sk, c1))
+    print(enc_scheme.encrypts_one(pk, sk, c2))
 
 
 if __name__ == '__main__':
