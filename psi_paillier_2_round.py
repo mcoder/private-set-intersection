@@ -9,9 +9,24 @@ class PSI(object):
         self.sec_param = sec_param
 
     def b_to_a(self, set_b):
-        pass
+        enc_scheme = Paillier()
+        pk, sk = enc_scheme.keygen(self.sec_param)
+
+        set_a_mapped = [integer(a, pk['n']) for a in set_b]
+        coefs = poly_from_roots(set_a_mapped, integer(-1, pk['n']), integer(1, pk['n']))
+        coef_cts = [enc_scheme.encrypt(pk, c) for c in coefs]
+
+        out = {'pk': pk, 'coef_cts': coef_cts}
+        state_b = {'pk': pk, 'sk': sk, 'set_a': set_b}
+
+        return out, state_b
 
     def a_to_b(self, set_a, pk, coef_cts):
+        eval_cts = [poly_eval_horner(coef_cts, e) * random(pk['n']) + e for e in set_a]
+
+        return eval_cts
+
+    def b_out(self, eval_cts, pk, sk, set_a):
         pass
 
 
@@ -28,10 +43,11 @@ def test():
 
     psi = PSI()
 
-    out_b = psi.b_to_a(set_b)
-    out_a = psi.a_to_b(set_a, **out_b)
+    out_b_1, state_b = psi.b_to_a(set_b)
+    out_a = psi.a_to_b(set_a, **out_b_1)
+    out_b_2 = psi.b_to_out(out_a, **state_b)
 
-    print('output: {0}'.format(sorted(out_a)))
+    print('output: {0}'.format(sorted(out_b_2)))
 
 
 if __name__ == '__main__':

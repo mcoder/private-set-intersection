@@ -16,10 +16,10 @@ class PSI(object):
         coefs = poly_from_roots(set_a_mapped, integer(-1, pk['n']), integer(1, pk['n']))
         coef_cts = [enc_scheme.encrypt(pk, c) for c in coefs]
 
-        state_a = {'pk': pk, 'sk': sk, 'set_a': set_a}
         out = {'pk': pk, 'coef_cts': coef_cts}
+        state_a = {'pk': pk, 'sk': sk, 'set_a': set_a}
 
-        return state_a, out
+        return out, state_a
 
     def b_to_a(self, set_b, pk, coef_cts):
         eval_cts = [poly_eval_horner(coef_cts, e) * random(pk['n']) + e for e in set_b]
@@ -31,6 +31,9 @@ class PSI(object):
         evals = [int(enc_scheme.decrypt(pk, sk, ct)) for ct in eval_cts]
         set_int = sorted(set(evals) & set(set_a))
 
+        return set_int
+
+    def b_to_out(self, set_int):
         return set_int
 
 
@@ -47,11 +50,12 @@ def test():
 
     psi = PSI(1024)
 
-    state_a, out_a_1 = psi.a_to_b_1(set_a)
-    out_b = psi.b_to_a(set_b, **out_a_1)
-    out_a_2 = psi.a_to_b_2(out_b, **state_a)
+    out_a_1, state_a = psi.a_to_b_1(set_a)
+    out_b_1 = psi.b_to_a(set_b, **out_a_1)
+    out_a_2 = psi.a_to_b_2(out_b_1, **state_a)
+    out_b_2 = psi.b_to_out(out_a_2)
 
-    print('output: {0}'.format(sorted(out_a_2)))
+    print('output: {0}'.format(sorted(out_b_2)))
 
 
 if __name__ == '__main__':
