@@ -17,7 +17,7 @@ class PSI(object):
         coef_cts = [enc_scheme.encrypt(pk, c) for c in coefs]
 
         out = {'pk': pk, 'coef_cts': coef_cts}
-        state_b = {'pk': pk, 'sk': sk, 'set_a': set_b}
+        state_b = {'pk': pk, 'sk': sk, 'set_b': set_b}
 
         return out, state_b
 
@@ -26,8 +26,12 @@ class PSI(object):
 
         return eval_cts
 
-    def b_out(self, eval_cts, pk, sk, set_a):
-        pass
+    def b_to_out(self, eval_cts, pk, sk, set_b):
+        enc_scheme = Paillier()
+        evals = [int(enc_scheme.decrypt(pk, sk, ct)) for ct in eval_cts]
+        set_int = sorted(set(evals) & set(set_b))
+
+        return set_int
 
 
 def test():
@@ -41,7 +45,7 @@ def test():
     print('a & b: {0}'.format(sorted(set(set_a) & set(set_b))))
     print
 
-    psi = PSI()
+    psi = PSI(1024)
 
     out_b_1, state_b = psi.b_to_a(set_b)
     out_a = psi.a_to_b(set_a, **out_b_1)
