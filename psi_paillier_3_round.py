@@ -5,9 +5,12 @@ from utils_poly import poly_eval, poly_eval_horner, poly_from_roots
 
 
 class PSI(object):
+    def __init__(self, sec_param):
+        self.sec_param = sec_param
+
     def a_to_b_1(self, set_a):
         enc_scheme = Paillier()
-        pk, sk = enc_scheme.keygen(1024)
+        pk, sk = enc_scheme.keygen(self.sec_param)
 
         set_a_mapped = [integer(a, pk['n']) for a in set_a]
         coefs = poly_from_roots(set_a_mapped, integer(-1, pk['n']), integer(1, pk['n']))
@@ -42,13 +45,13 @@ def test():
     print('a & b: {0}'.format(sorted(set(set_a) & set(set_b))))
     print
 
-    psi = PSI()
+    psi = PSI(1024)
 
     state_a, out_a_1 = psi.a_to_b_1(set_a)
     out_b = psi.b_to_a(set_b, **out_a_1)
-    a_out_2 = psi.a_to_b_2(out_b, **state_a)
+    out_a_2 = psi.a_to_b_2(out_b, **state_a)
 
-    print('output: {0}'.format(sorted(a_out_2)))
+    print('output: {0}'.format(sorted(out_a_2)))
 
 
 if __name__ == '__main__':
