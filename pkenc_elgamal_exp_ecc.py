@@ -1,5 +1,8 @@
 from charm.toolbox.ecgroup import G, ZR, ECGroup
 from charm.toolbox.eccurve import prime192v2
+from charm.toolbox.integergroup import integer
+
+order = 6277101735386680763835789423078825936192100537584385056049
 
 
 class ElGamal(object):
@@ -16,16 +19,12 @@ class ElGamal(object):
         group, g, h = pk['group'], pk['g'], pk['h']
         y = group.random(ZR)
         c1 = g ** y
-        s = h ** y
-        c2 = group.encode(str(m)) * s
+        c2 = (h ** y) * (g ** (m % order))
         return Cipher(c1, c2, pk)
 
-    def decrypt(self, pk, sk, c):
-        group = pk['group']
+    def encrypts_zero(self, sk, c):
         x = sk['x']
-        s = c.c1 ** x
-        m = group.decode(c.c2 * (s ** -1))
-        return m
+        return c.c2 == c.c1 ** x
 
 
 class Cipher(object):
@@ -39,21 +38,27 @@ class Cipher(object):
         if type(other) == Cipher:
             return Cipher(self.c1 * other.c1, self.c2 * other.c2, self.pk)
         else:
-            return Cipher(self.c1, self.c2 * (g ** other), self.pk)
+            return Cipher(self.c1, self.c2 * (g ** (other % order)), self.pk)
 
     def __mul__(self, other):
-        pass
+        g = self.pk['g']
+        return Cipher(self.c1 ** (other % order), self.c2 ** (other % order), self.pk)
 
 
 def test_elgamal():
     enc_scheme = ElGamal()
     pk, sk = enc_scheme.keygen()
 
-    m = 2
-    c = enc_scheme.encrypt(pk, m)
-    d = enc_scheme.decrypt(pk, sk, c)
+    c1 = enc_scheme.encrypt(pk, -2)
+    c2 = enc_scheme.encrypt(pk, 2)
+    c3 = c1 + c2
+    c4 = enc_scheme.encrypt(pk, 4)
+    c5 = c1 * 2 + c4
 
-    print(str(m), str(d))
+    print(enc_scheme.encrypts_zero(sk, c1))
+    print(enc_scheme.encrypts_zero(sk, c2))
+    print(enc_scheme.encrypts_zero(sk, c3))
+    print(enc_scheme.encrypts_zero(sk, c5))
 
 
 if __name__ == '__main__':
