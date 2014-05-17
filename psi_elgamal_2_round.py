@@ -25,20 +25,18 @@ class PSIElGamal(object):
         return eval_cts
 
     def client_output(self, eval_cts, pk, sk, client_set):
-        g = pk['g']
+        g, order = pk['g'], pk['order']
         x = sk['x']
-        #el = ElGamal()
 
         eval_exps = [ct.c2 * ((ct.c1 ** x) ** -1) for ct in eval_cts]
-        #print(eval_exps[0] == g ** client_set[0])
-        intersection = [e for e in client_set if g ** e in eval_exps]
+        intersection = [e for e in client_set if g ** (e % order) in eval_exps]
 
         return intersection
 
 
 def test():
-    set_len = 50
-    set_int_len = 10
+    set_len = 10
+    set_int_len = 12
     server_set = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
     client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + server_set[
                                                                                                        :set_int_len]
@@ -54,7 +52,7 @@ def test():
     server_out = psi.server_to_client(server_set, **client_out_1)
     client_out_2 = psi.client_output(server_out, **client_state)
 
-    print('client output: {0}'.format(sorted(set(server_set) & set(client_set))))
+    print('client output: {0}'.format(sorted(client_out_2)))
 
 
 if __name__ == '__main__':

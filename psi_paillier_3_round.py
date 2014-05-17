@@ -55,7 +55,7 @@ def test():
     server_out_2 = psi.server_to_client_2(client_out_1, **server_state)
     client_out_2 = psi.client_output(server_out_2)
 
-    print('output: {0}'.format(sorted(client_out_2)))
+    print('client output: {0}'.format(sorted(client_out_2)))
 
 
 if __name__ == '__main__':
