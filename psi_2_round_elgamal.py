@@ -1,12 +1,16 @@
+__author__ = 'Milinda Perera'
+
 import random as pyrandom
+
 from charm.toolbox.integergroup import random, integer
-from pkenc_elgamal_exp_ecc import ElGamal
-from utils_poly import poly_eval, poly_eval_horner, poly_from_roots
+
+from pkenc_elgamal_exp_ecc import ElGamalExp
+from utils_poly import poly_eval_horner, poly_from_roots
 
 
-class PSIElGamal(object):
+class PSI2RoundElGamal(object):
     def client_to_server(self, client_set):
-        enc_scheme = ElGamal()
+        enc_scheme = ElGamalExp()
         pk, sk = enc_scheme.keygen()
 
         set_a_mapped = [integer(a, pk['order']) for a in client_set]
@@ -45,7 +49,7 @@ def test():
     print('intersection: {0}'.format(sorted(set(server_set) & set(client_set))))
     print
 
-    psi = PSIElGamal()
+    psi = PSI2RoundElGamal()
 
     client_out_1, client_state = psi.client_to_server(client_set)
     server_out = psi.server_to_client(server_set, **client_out_1)

@@ -1,10 +1,14 @@
+__author__ = 'Milinda Perera'
+
 import random as pyrandom
+
 from charm.toolbox.integergroup import random, integer
+
 from pkenc_paillier import Paillier
-from utils_poly import poly_eval, poly_eval_horner, poly_from_roots
+from utils_poly import poly_eval_horner, poly_from_roots
 
 
-class PSIPaillier2Round(object):
+class PSI2RoundPaillier(object):
     def __init__(self, sec_param):
         self.sec_param = sec_param
 
@@ -38,14 +42,15 @@ def test():
     set_len = 50
     set_int_len = 10
     server_set = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
-    client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + server_set[:set_int_len]
+    client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + server_set[
+                                                                                                       :set_int_len]
 
     print('server set: {0}'.format(sorted(server_set)))
     print('client set: {0}'.format(sorted(client_set)))
     print('intersection: {0}'.format(sorted(set(server_set) & set(client_set))))
     print
 
-    psi = PSIPaillier2Round(1024)
+    psi = PSI2RoundPaillier(1024)
 
     client_out_1, client_state = psi.client_to_server(client_set)
     server_out = psi.server_to_client(server_set, **client_out_1)

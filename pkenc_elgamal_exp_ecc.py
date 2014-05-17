@@ -1,8 +1,10 @@
+__author__ = 'Milinda Perera'
+
 from charm.toolbox.ecgroup import G, ZR, ECGroup
 from charm.toolbox.eccurve import prime192v2
 
 
-class ElGamal(object):
+class ElGamalExp(object):
     def keygen(self):
         group = ECGroup(prime192v2)
         g = group.random(G)
@@ -48,7 +50,7 @@ class Cipher(object):
 
 
 def test_elgamal():
-    enc_scheme = ElGamal()
+    enc_scheme = ElGamalExp()
     pk, sk = enc_scheme.keygen()
 
     c1 = enc_scheme.encrypt(pk, -2)
