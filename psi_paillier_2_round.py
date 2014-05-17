@@ -4,54 +4,54 @@ from pkenc_paillier import Paillier
 from utils_poly import poly_eval, poly_eval_horner, poly_from_roots
 
 
-class PSI(object):
+class PSIPaillier2Round(object):
     def __init__(self, sec_param):
         self.sec_param = sec_param
 
-    def b_to_a(self, set_b):
+    def client_to_server(self, client_set):
         enc_scheme = Paillier()
         pk, sk = enc_scheme.keygen(self.sec_param)
 
-        set_a_mapped = [integer(a, pk['n']) for a in set_b]
-        coefs = poly_from_roots(set_a_mapped, integer(-1, pk['n']), integer(1, pk['n']))
+        slient_set_mapped = [integer(a, pk['n']) for a in client_set]
+        coefs = poly_from_roots(slient_set_mapped, integer(-1, pk['n']), integer(1, pk['n']))
         coef_cts = [enc_scheme.encrypt(pk, c) for c in coefs]
 
         out = {'pk': pk, 'coef_cts': coef_cts}
-        state_b = {'pk': pk, 'sk': sk, 'set_b': set_b}
+        client_state = {'pk': pk, 'sk': sk, 'client_set': client_set}
 
-        return out, state_b
+        return out, client_state
 
-    def a_to_b(self, set_a, pk, coef_cts):
-        eval_cts = [poly_eval_horner(coef_cts, e) * random(pk['n']) + e for e in set_a]
+    def server_to_client(self, server_set, pk, coef_cts):
+        eval_cts = [poly_eval_horner(coef_cts, e) * random(pk['n']) + e for e in server_set]
 
         return eval_cts
 
-    def b_to_out(self, eval_cts, pk, sk, set_b):
+    def client_output(self, eval_cts, pk, sk, client_set):
         enc_scheme = Paillier()
         evals = [int(enc_scheme.decrypt(pk, sk, ct)) for ct in eval_cts]
-        set_int = sorted(set(evals) & set(set_b))
+        intersection = sorted(set(evals) & set(client_set))
 
-        return set_int
+        return intersection
 
 
 def test():
     set_len = 50
     set_int_len = 10
-    set_a = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
-    set_b = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + set_a[:set_int_len]
+    server_set = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
+    client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + server_set[:set_int_len]
 
-    print('a: {0}'.format(sorted(set_a)))
-    print('b: {0}'.format(sorted(set_b)))
-    print('a & b: {0}'.format(sorted(set(set_a) & set(set_b))))
+    print('server set: {0}'.format(sorted(server_set)))
+    print('client set: {0}'.format(sorted(client_set)))
+    print('intersection: {0}'.format(sorted(set(server_set) & set(client_set))))
     print
 
-    psi = PSI(1024)
+    psi = PSIPaillier2Round(1024)
 
-    out_b_1, state_b = psi.b_to_a(set_b)
-    out_a = psi.a_to_b(set_a, **out_b_1)
-    out_b_2 = psi.b_to_out(out_a, **state_b)
+    client_out_1, client_state = psi.client_to_server(client_set)
+    server_out = psi.server_to_client(server_set, **client_out_1)
+    client_out_2 = psi.client_output(server_out, **client_state)
 
-    print('output: {0}'.format(sorted(out_b_2)))
+    print('client output: {0}'.format(sorted(client_out_2)))
 
 
 if __name__ == '__main__':
