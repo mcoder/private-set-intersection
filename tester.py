@@ -1,10 +1,18 @@
 __author__ = 'Milinda Perera'
 
 import random as pyrandom
+from time import time
 
 from psi_3_round_paillier import PSI3RoundPaillier
 from psi_2_round_paillier import PSI2RoundPaillier
 from psi_2_round_elgamal import PSI2RoundElGamal
+
+
+def timer(func, *pargs, **kargs):
+    start = time()
+    ret = func(*pargs, **kargs)
+    elapsed = time() - start
+    return elapsed, ret
 
 
 def run_psi_3_round_paillier(server_set, client_set):
@@ -33,25 +41,27 @@ def run_psi_2_round_elgamal(server_set, client_set):
 
 
 if __name__ == '__main__':
-    set_len = 20  #input('Input set length: ')
-    intersection_len = 5  #input('Input intersection length: ')
-    server_set = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
-    client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - intersection_len]
-    client_set += server_set[:intersection_len]
+    set_len = input('Input set length: ')
+    intersection_len = input('Input intersection length: ')
 
+    server_set = []
+    client_set = []
+    while not (len(client_set) == len(server_set) == set_len):
+        server_set = list(set([pyrandom.randint(1, set_len * 10) for i in range(set_len * 5)]))[:set_len]
+        client_set = list(set([pyrandom.randint(set_len * 10, set_len * 20) for i in range(set_len * 5)]))[:set_len - intersection_len] + server_set[:intersection_len]
+
+    print
     print('server set: {0}'.format(sorted(server_set)))
     print('client set: {0}'.format(sorted(client_set)))
     print('intersection: {0}'.format(sorted(set(server_set) & set(client_set))))
     print
 
-    psi_3_round_paillier_result = run_psi_3_round_paillier(server_set, client_set)
-    print('PSI3RoundPaillier output: {0}'.format(psi_3_round_paillier_result))
-    print
+    tests = [['PSI3RoundPaillier', run_psi_3_round_paillier],
+             ['PSI2RoundPaillier', run_psi_2_round_paillier],
+             ['PSI2RoundElGamal', run_psi_2_round_elgamal]]
 
-    psi_2_round_paillier_result = run_psi_2_round_paillier(server_set, client_set)
-    print('PSI2RoundPaillier output: {0}'.format(psi_2_round_paillier_result))
-    print
-
-    psi_2_round_elgamal_result = run_psi_2_round_elgamal(server_set, client_set)
-    print('PSI2RoundElGamal output: {0}'.format(psi_2_round_elgamal_result))
-    print
+    for test in tests:
+        time_taken, result = timer(test[1], server_set, client_set)
+        print('{0} output: {1}'.format(test[0], sorted(result)))
+        print('{0} time: {1}'.format(test[0], time_taken))
+        print

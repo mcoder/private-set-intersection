@@ -39,29 +39,3 @@ class PSI3RoundPaillier(object):
 
     def client_output(self, intersect):
         return intersect
-
-
-def test():
-    set_len = 50
-    intersection_len = 10
-    server_set = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
-    client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - intersection_len] + server_set[
-                                                                                                            :intersection_len]
-
-    print('server set: {0}'.format(sorted(server_set)))
-    print('client set: {0}'.format(sorted(client_set)))
-    print('intersection: {0}'.format(sorted(set(server_set) & set(client_set))))
-    print
-
-    psi = PSI3RoundPaillier(1024)
-
-    server_out_1, server_state = psi.server_to_client_1(server_set)
-    client_out_1 = psi.client_to_server(client_set, **server_out_1)
-    server_out_2 = psi.server_to_client_2(client_out_1, **server_state)
-    client_out_2 = psi.client_output(server_out_2)
-
-    print('client output: {0}'.format(sorted(client_out_2)))
-
-
-if __name__ == '__main__':
-    test()

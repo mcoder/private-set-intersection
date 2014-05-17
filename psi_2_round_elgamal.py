@@ -4,7 +4,7 @@ import random as pyrandom
 
 from charm.toolbox.integergroup import random, integer
 
-from pkenc_elgamal_exp_ecc import ElGamalExp
+from pkenc_elgamal_exp import ElGamalExp
 from utils_poly import poly_eval_horner, poly_from_roots
 
 
@@ -35,28 +35,3 @@ class PSI2RoundElGamal(object):
         intersection = [e for e in client_set if g ** (e % order) in eval_exps]
 
         return intersection
-
-
-def test():
-    set_len = 200
-    set_int_len = 50
-    server_set = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
-    client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + server_set[
-                                                                                                       :set_int_len]
-
-    print('server set: {0}'.format(sorted(server_set)))
-    print('client set: {0}'.format(sorted(client_set)))
-    print('intersection: {0}'.format(sorted(set(server_set) & set(client_set))))
-    print
-
-    psi = PSI2RoundElGamal()
-
-    client_out_1, client_state = psi.client_to_server(client_set)
-    server_out = psi.server_to_client(server_set, **client_out_1)
-    client_out_2 = psi.client_output(server_out, **client_state)
-
-    print('client output: {0}'.format(sorted(client_out_2)))
-
-
-if __name__ == '__main__':
-    test()

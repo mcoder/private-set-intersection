@@ -49,7 +49,7 @@ class Cipher(object):
         return Cipher(self.c1 ** (other % order), self.c2 ** (other % order), self.pk)
 
 
-def test_elgamal():
+def test_elgamalexp():
     enc_scheme = ElGamalExp()
     pk, sk = enc_scheme.keygen()
 
@@ -69,4 +69,4 @@ def test_elgamal():
 
 
 if __name__ == '__main__':
-    test_elgamal()
+    test_elgamalexp()
