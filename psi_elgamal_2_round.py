@@ -19,8 +19,7 @@ class PSIElGamal(object):
         return out, client_state
 
     def server_to_client(self, server_set, pk, coef_cts):
-        #eval_cts = [poly_eval_horner(coef_cts, e) * int(random(pk['order'])) + e for e in server_set]
-        eval_cts = [poly_eval_horner(coef_cts, e) + e for e in server_set]
+        eval_cts = [poly_eval_horner(coef_cts, e) * int(random(pk['order'])) + e for e in server_set]
 
         return eval_cts
 
@@ -35,8 +34,8 @@ class PSIElGamal(object):
 
 
 def test():
-    set_len = 10
-    set_int_len = 12
+    set_len = 200
+    set_int_len = 50
     server_set = list(set([pyrandom.randint(1, 200) for i in range(100)]))[:set_len]
     client_set = list(set([pyrandom.randint(201, 400) for i in range(100)]))[:set_len - set_int_len] + server_set[
                                                                                                        :set_int_len]
