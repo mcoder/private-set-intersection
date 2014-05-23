@@ -1,7 +1,5 @@
 __author__ = 'Milinda Perera'
 
-import random as pyrandom
-
 from charm.toolbox.integergroup import random, integer
 
 from pkenc_elgamal_exp import ElGamalExp

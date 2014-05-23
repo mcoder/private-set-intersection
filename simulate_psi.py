@@ -48,7 +48,8 @@ if __name__ == '__main__':
     client_set = []
     while not (len(client_set) == len(server_set) == set_len):
         server_set = list(set([pyrandom.randint(1, set_len * 10) for i in range(set_len * 5)]))[:set_len]
-        client_set = list(set([pyrandom.randint(set_len * 10, set_len * 20) for i in range(set_len * 5)]))[:set_len - intersection_len] + server_set[:intersection_len]
+        client_set = list(set([pyrandom.randint(set_len * 10, set_len * 20) for i in range(set_len * 5)]))[
+                     :set_len - intersection_len] + server_set[:intersection_len]
 
     print
     print('server set: {0}'.format(sorted(server_set)))
