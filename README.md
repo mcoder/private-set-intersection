@@ -5,7 +5,8 @@ intro to problem
 
 what this provides
 
-solution 1
+1. A 2-Round PSI Protocol Based on Paillier Encryption Scheme
+-------------------------------------------------------------
 
 solution 2
 
