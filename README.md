@@ -7,7 +7,8 @@ a server and a client, need to privately compute an intersection of their respec
 In doing so, one or both parties must obtain the intersection, while neither should learn any information
 about the other set.
 
-This library implements three private set intersection protocols based on polynomials. They are
+This library implements three private set intersection protocols based on polynomials evaluations and interpolations.
+They are,
 
 1. A 3-Round PSI Protocol Based on Paillier Encryption Scheme
 2. A 2-Round PSI Protocol Based on Paillier Encryption Scheme
