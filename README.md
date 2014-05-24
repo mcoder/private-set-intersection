@@ -18,6 +18,6 @@ The first protocol is initiated by the server, whereas the second and third prot
 the client. The Paillier encryption scheme is based on integer groups. Therefore, it requires a security parameter of
 at least 1024 to be secure with respect to currently available computing power. On the other hand, ElGamal
 encryption scheme is based on elliptic curve groups, which can provide comparable security only with a security
-parameter of 160. This makes the third protocol above far more efficient than the other two.
+parameter of 160. This makes the third protocol far more efficient than the other two.
 Please refer to [this paper](http://link.springer.com/chapter/10.1007/978-3-642-14577-3_13) for more information
 regarding the theory behind these protocols.
