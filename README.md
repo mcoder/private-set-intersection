@@ -14,5 +14,10 @@ They are,
 2. A 2-Round PSI Protocol Based on Paillier Encryption Scheme
 3. A 2-Round PSI Protocol Based on ElGamal Encryption Scheme
 
-The first protocol is initiated by the server. On the other hand, the second and third protocols are initiated by
-the client.
+The first protocol is initiated by the server, whereas the second and third protocols are initiated by
+the client. The Paillier encryption scheme is based on integer groups. Therefore, it requires a security parameter of
+at least 1024 to be secure with respect to currently available computing power. On the other hand, ElGamal
+encryption scheme is based on elliptic curve groups, which can provide comparable security only with a security
+parameter of 160. This makes the third protocol above far more efficient than the other two.
+Please refer to [this paper](http://link.springer.com/chapter/10.1007/978-3-642-14577-3_13) for more information
+regarding the theory behind these protocols.
