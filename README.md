@@ -24,9 +24,19 @@ regarding the theory behind these protocols.
 
 Some information about the included files are as follows.
 
-**simulate_psi.py:**
+**1. simulate_psi.py:**
 
-This file simulates the three PSI protocols on randomly generated server and client sets. One can run this file
-by executing the following command.
+This file simulates the three PSI protocols. The script first asks the user for the length of the server and
+client sets as well as the length of their intersection. Next, it generates those sets by randomly picking
+integers. Finally, it runs the three PSI protocols on the two sets and reports the output. It also measures
+the time required to execute each protocol and reports that result as well. One can run this script by executing
+the following command.
 
 `python simulate_psi.py`
+
+**2. sample_simulation.txt**
+
+This file contains a sample run of the simulate_psi.py file.
+
+**3. psi_3_round_paillier.py**
+
