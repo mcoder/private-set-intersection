@@ -26,7 +26,7 @@ Some information about the included files are as follows.
 
 **1. simulate_psi.py:**
 
-This file simulates the three PSI protocols. The script first asks the user for the length of the server and
+This script simulates the three PSI protocols. The script first asks the user for the length of the server and
 client sets as well as the length of their intersection. Next, it generates those sets by randomly picking
 integers. Finally, it runs the three PSI protocols on the two sets and reports the output. It also measures
 the time required to execute each protocol and reports that result as well. One can run this script by executing
@@ -38,5 +38,12 @@ the following command.
 
 This file contains a sample run of the simulate_psi.py file.
 
-**3. psi_3_round_paillier.py**
+**3. psi_3_round_paillier.py, 4. psi_2_round_paillier.py, 5. psi_2_round_elgamal.py**
 
+These modules contain the classes that implement the three PSI protocols.
+
+**6. utils_poly.py**
+
+**7. pkenc_paillier.py**
+
+**8. pkenc_elgamal.py**
