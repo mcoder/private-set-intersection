@@ -44,6 +44,10 @@ These modules contain the classes that implement the three PSI protocols.
 
 **6. utils_poly.py**
 
+This module consists of polynomial interpolation and evaluation functions. These functions are defined general
+enough to work on any type of ring elements such as integer rings, polynomial rings, etc. In other words, the input
+type is only required to have addition and multiplication operations implemented.
+
 **7. pkenc_paillier.py**
 
 **8. pkenc_elgamal.py**
