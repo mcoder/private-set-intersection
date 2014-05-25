@@ -7,8 +7,8 @@ a server and a client, need to privately compute an intersection of their respec
 In doing so, one or both parties must obtain the intersection, while neither should learn any information
 about the other set.
 
-This library implements three private set intersection protocols based on polynomials evaluations and interpolations.
-They are,
+This library implements three private set intersection (PSI) protocols based on polynomials evaluations and
+interpolations. They are,
 
 1. A 3-Round PSI Protocol Based on Paillier Encryption Scheme
 2. A 2-Round PSI Protocol Based on Paillier Encryption Scheme
@@ -21,3 +21,12 @@ encryption scheme is based on elliptic curve groups, which can provide comparabl
 parameter of 160. This makes the third protocol far more efficient than the other two.
 Please refer to [this paper](http://link.springer.com/chapter/10.1007/978-3-642-14577-3_13) for more information
 regarding the theory behind these protocols.
+
+Some information about the included files are as follows.
+
+**simulate_psi.py:**
+
+This file simulates the three PSI protocols on randomly generated server and client sets. One can run this file
+by executing the following command.
+
+`python simulate_psi.py`
