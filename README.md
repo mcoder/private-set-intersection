@@ -8,7 +8,8 @@ In doing so, one or both parties must obtain the intersection, while neither sho
 about the other set.
 
 This library implements three private set intersection (PSI) protocols based on polynomials evaluations and
-interpolations. They are,
+interpolations. At the completion of these protocols, only the client learns the intersection. The protocols
+are,
 
 1. A 3-Round PSI Protocol Based on Paillier Encryption Scheme
 2. A 2-Round PSI Protocol Based on Paillier Encryption Scheme
