@@ -37,7 +37,7 @@ the following command.
 
 **2. sample_simulation.txt**
 
-This file contains a sample run of the simulate_psi.py file.
+This file contains the output of a single run of the simulate_psi.py script.
 
 **3. psi_3_round_paillier.py, 4. psi_2_round_paillier.py, 5. psi_2_round_elgamal.py**
 
@@ -47,7 +47,8 @@ These modules contain the classes that implement the three PSI protocols.
 
 This module consists of polynomial interpolation and evaluation functions. These functions are defined general
 enough to work on any type of ring elements such as integer rings, polynomial rings, etc. In other words, the input
-type is only required to have addition and multiplication operations implemented.
+type is only required to have addition and multiplication operations implemented, and the designer of the input
+type is given complete freedom to build those operations.
 
 **7. pkenc_paillier.py**
 
