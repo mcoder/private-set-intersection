@@ -7,7 +7,7 @@ a server and a client, need to privately compute an intersection of their respec
 In doing so, one or both parties must obtain the intersection, while neither should learn any information
 about the other set.
 
-This library implements three private set intersection (PSI) protocols based on polynomials evaluations and
+This library implements three private set intersection (PSI) protocols based on oblivious polynomials evaluations and
 interpolations. At the completion of each of these protocols, only the client learns the intersection.
 The protocols are,
 
@@ -58,4 +58,8 @@ the Paillier cryptosystem.
 
 **8. pkenc_elgamal.py**
 
-
+This module provides the class that implements a variant of the [ElGamal cryptosystem](http://en.wikipedia.org/wiki/ElGamal)
+that provides the homorphic properties required for oblivious polynomial evaluations. More specifically, the encryption of
+a message `m` maps it to the group element `g^m`. This allows one to perform homomorphic addition and multiplication (by a constant)
+in the exponent. Unfortunately, this mapping makes it hard to decrypt ciphertexts efficiently. Nevertheless, it suffices for
+our purposes.
