@@ -69,17 +69,10 @@ def test_paillier():
     c1 = c1 * (2 ** 2) + c1
     c1.c *= ((c1.pk['n2'] - 1) % c1.pk['n2'])
 
-    d = enc_scheme.decrypt(pk, sk, c1)
+    d = enc_scheme.decrypt(pk, sk, c)
 
     print(str(m), str(d))
 
 
-def test_ops():
-    a = integer(3, 23)
-    s = integer(-1, 23)
-    print(reduce(a * s))
-
-
 if __name__ == '__main__':
     test_paillier()
-    test_ops()
