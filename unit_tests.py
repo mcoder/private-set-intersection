@@ -4,9 +4,9 @@ import unittest
 
 from charm.toolbox.integergroup import integer
 
-from lib.utils_poly import poly_from_roots, poly_eval, poly_eval_horner, poly_mul, poly_print
-from lib.pkenc_elgamal_exp import ElGamalExp
-from lib.pkenc_paillier import Paillier
+from modules.utils_poly import poly_from_roots, poly_eval, poly_eval_horner, poly_mul, poly_print
+from modules.pkenc_elgamal_exp import ElGamalExp
+from modules.pkenc_paillier import Paillier
 
 
 class Test_utils_poly(unittest.TestCase):
