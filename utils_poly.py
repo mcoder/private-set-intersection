@@ -52,11 +52,11 @@ def poly_mul(coefs1, coefs2, zero):
 
 def poly_print(coefs):
     """Prints the polynomial whose coefficients are given in coefs in human readable form."""
-    out = [poly_coef_to_str(int(coefs[i]), i) for i in range(len(coefs)) if coefs[i] != 0]
+    out = [poly_coef_to_str(int(coefs[i]), i) for i in range(len(coefs)) if coefs[i] != 0 or i == 0]
     out.reverse()
     if out[0][0] == '+':
         del out[0][0]
-    print(' '.join([' '.join(l) for l in out]))
+    return ' '.join([' '.join(l) for l in out])
 
 
 def poly_coef_to_str(coef, degree):
