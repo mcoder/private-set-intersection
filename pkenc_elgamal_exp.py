@@ -25,14 +25,19 @@ class ElGamalExp(object):
         c2 = (h ** y) * (g ** (m % order))
         return Cipher(c1, c2, pk)
 
-    def encrypts_zero(self, pk, sk, c):
+    def does_encrypt_zero(self, pk, sk, c):
         x = sk['x']
         return c.c2 == c.c1 ** x
 
-    def encrypts_one(self, pk, sk, c):
+    def does_encrypt_one(self, pk, sk, c):
         g = pk['g']
         x = sk['x']
         return c.c2 == (c.c1 ** x) * g
+
+    def does_encrypt(self, pk, sk, c, m):
+        g, order = pk['g'], pk['order']
+        x = sk['x']
+        return c.c2 == (c.c1 ** x) * (g ** (m % order))
 
 
 class Cipher(object):
@@ -55,26 +60,3 @@ class Cipher(object):
     def __mul__(self, other):
         g, order = self.pk['g'], self.pk['order']
         return Cipher(self.c1 ** (other % order), self.c2 ** (other % order), self.pk)
-
-
-def test_elgamalexp():
-    enc_scheme = ElGamalExp()
-    pk, sk = enc_scheme.keygen()
-
-    c1 = enc_scheme.encrypt(pk, -2)
-    c2 = enc_scheme.encrypt(pk, 1)
-    c3 = c1 + c2 + 1
-    c4 = enc_scheme.encrypt(pk, 4)
-    c5 = c1 * 2 + c4
-
-    print(enc_scheme.encrypts_zero(pk, sk, c1))
-    print(enc_scheme.encrypts_zero(pk, sk, c2))
-    print(enc_scheme.encrypts_zero(pk, sk, c3))
-    print(enc_scheme.encrypts_zero(pk, sk, c5))
-
-    print(enc_scheme.encrypts_one(pk, sk, c1))
-    print(enc_scheme.encrypts_one(pk, sk, c2))
-
-
-if __name__ == '__main__':
-    test_elgamalexp()
