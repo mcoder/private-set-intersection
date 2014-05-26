@@ -52,4 +52,10 @@ type is given complete freedom to build those operations.
 
 **7. pkenc_paillier.py**
 
+This module contains the class that implements the [Paillier cryptosystem](http://en.wikipedia.org/wiki/Paillier_cryptosystem).
+Also defined in this module is a class for Paillier ciphertexts that abstract away the homomorphic properties of
+the Paillier cryptosystem.
+
 **8. pkenc_elgamal.py**
+
+
