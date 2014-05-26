@@ -27,12 +27,27 @@ class Test_utils_poly(unittest.TestCase):
 
         # Each test case is (roots, x, eval)
         cases = [([2, 3, 4, 5], 3, 0),
-                 ([-1, 2, -10, -111], -10, 3),
+                 ([-1, 2, -10, -111], -10, 0),
                  ([1, 2, -7, -22, 0], 4, 6864)]
 
         for (roots, x, eval) in cases:
             coefs = poly_from_roots(roots, -1, 1)
             result = poly_eval(coefs, x)
+            self.assertEqual(eval, result, output.format(roots, x, eval, result))
+
+    def test_3_poly_eval_horner(self):
+        """Tests the Horner's polynomial evaluation function"""
+
+        output = "poly_eval_horner failed on {0} and {1}.\nNeeded {2}, got {3}."
+
+        # Each test case is (roots, x, eval)
+        cases = [([2, 3, 4, 5], 3, 0),
+                 ([-1, 2, -10, -111], -10, 0),
+                 ([1, 2, -7, -22, 0], 4, 6864)]
+
+        for (roots, x, eval) in cases:
+            coefs = poly_from_roots(roots, -1, 1)
+            result = poly_eval_horner(coefs, x)
             self.assertEqual(eval, result, output.format(roots, x, eval, result))
 
 
