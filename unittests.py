@@ -2,6 +2,8 @@ __author__ = 'Milinda Perera'
 
 import unittest
 
+from charm.toolbox.integergroup import integer
+
 from utils_poly import poly_from_roots, poly_eval, poly_eval_horner, poly_mul, poly_print
 from pkenc_elgamal_exp import ElGamalExp
 from pkenc_paillier import Paillier
@@ -164,17 +166,17 @@ class Test_pkenc_paillier(unittest.TestCase):
         output = "Paillier homomorphic addition failed on {0} and {1}."
 
         cases = [(1, 1, 2),
-                 (1, 2, 3),
-                 (3, 30, 33),
+                 (-1, 2, 1),
+                 (-3, 30, 27),
                  (22, 22, 44)]
 
         # Each test case is (num1, num2, sum)
         for (a, b, s) in cases:
-            c1 = self.enc_scheme.encrypt(self.pk, a)
-            c2 = self.enc_scheme.encrypt(self.pk, b)
+            c1 = self.enc_scheme.encrypt(self.pk, integer(a, self.pk['n']))
+            c2 = self.enc_scheme.encrypt(self.pk, integer(b, self.pk['n']))
             c3 = c1 + c2
             d = self.enc_scheme.decrypt(self.pk, self.sk, c3)
-            self.assertEqual(d, s, output.format(a, b))
+            self.assertEqual(d, integer(s, self.pk['n']), output.format(a, b))
 
     def test_3_homomorphic_multiplication(self):
         """Tests homomorphic multiplication of Paillier ciphertexts."""
@@ -184,14 +186,14 @@ class Test_pkenc_paillier(unittest.TestCase):
         # Each test case is (num1, num2, mul)
         cases = [(1, 1, 1),
                  (2, 4, 8),
-                 (5, 5, 25),
-                 (6, 4, 24)]
+                 (-5, 5, -25),
+                 (6, -4, -24)]
 
         for (a, b, m) in cases:
-            c1 = self.enc_scheme.encrypt(self.pk, a)
-            c2 = c1 * b
+            c1 = self.enc_scheme.encrypt(self.pk, integer(a, self.pk['n']))
+            c2 = c1 * integer(b, self.pk['n'])
             d = self.enc_scheme.decrypt(self.pk, self.sk, c2)
-            self.assertEqual(d, m, output.format(a, b))
+            self.assertEqual(d, integer(m, self.pk['n']), output.format(a, b))
 
 
 if __name__ == '__main__':
