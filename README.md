@@ -43,7 +43,7 @@ This file contains the output of a single run of the simulate_psi.py script.
 
 This script consists of the unit tests created for testing purposes. One can run this script by executing the following command.
 
-`python unittests.py`
+`python unit_tests.py`
 
 **4. modules/psi_3_round_paillier.py, 5. modules/psi_2_round_paillier.py, 6. modules/psi_2_round_elgamal.py**
 
