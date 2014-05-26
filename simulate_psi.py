@@ -3,9 +3,9 @@ __author__ = 'Milinda Perera'
 import random as pyrandom
 from time import time
 
-from psi_3_round_paillier import PSI3RoundPaillier
-from psi_2_round_paillier import PSI2RoundPaillier
-from psi_2_round_elgamal import PSI2RoundElGamal
+from lib.psi_3_round_paillier import PSI3RoundPaillier
+from lib.psi_2_round_paillier import PSI2RoundPaillier
+from lib.psi_2_round_elgamal import PSI2RoundElGamal
 
 
 def timer(func, *pargs, **kargs):

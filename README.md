@@ -39,33 +39,35 @@ the following command.
 
 This file contains the output of a single run of the simulate_psi.py script.
 
-**3. psi_3_round_paillier.py, 4. psi_2_round_paillier.py, 5. psi_2_round_elgamal.py**
+**3. unit_tests.py**
+
+This script consists of the unit tests created for testing purposes. One can run this script by executing the following command.
+
+`python unittests.py`
+
+* Inside `lib` folder
+
+**4. psi_3_round_paillier.py, 5. psi_2_round_paillier.py, 6. psi_2_round_elgamal.py**
 
 These modules contain the classes that implement the three PSI protocols.
 
-**6. utils_poly.py**
+**7. utils_poly.py**
 
 This module consists of polynomial interpolation and evaluation functions. These functions are defined general
 enough to work on any type of ring elements such as integer rings, polynomial rings, etc. In other words, the input
 type is only required to have addition and multiplication operations implemented, and the designer of the input
 type is given complete freedom to build those operations.
 
-**7. pkenc_paillier.py**
+**8. pkenc_paillier.py**
 
 This module contains the class that implements the [Paillier cryptosystem](http://en.wikipedia.org/wiki/Paillier_cryptosystem).
 Also defined in this module is a class for Paillier ciphertexts that abstract away the homomorphic properties of
 the Paillier cryptosystem.
 
-**8. pkenc_elgamal.py**
+**9. pkenc_elgamal.py**
 
 This module provides the class that implements a variant of the [ElGamal cryptosystem](http://en.wikipedia.org/wiki/ElGamal)
 that provides the homorphic properties required for oblivious polynomial evaluations. More specifically, the encryption of
 a message `m` maps it to the group element `g^m`. This allows one to perform homomorphic addition and multiplication (by a constant)
 in the exponent. Unfortunately, this mapping makes it hard to decrypt ciphertexts efficiently. Nevertheless, it suffices for
 our purposes.
-
-**9. unittests.py**
-
-This script consists of the unit tests created for testing purposes. One can run this script by executing the following command.
-
-`python unittests.py`
