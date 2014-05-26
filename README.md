@@ -45,24 +45,24 @@ This script consists of the unit tests created for testing purposes. One can run
 
 `python unittests.py`
 
-**4. lib/psi_3_round_paillier.py, 5. lib/psi_2_round_paillier.py, 6. lib/psi_2_round_elgamal.py**
+**4. modules/psi_3_round_paillier.py, 5. modules/psi_2_round_paillier.py, 6. modules/psi_2_round_elgamal.py**
 
 These modules contain the classes that implement the three PSI protocols.
 
-**7. lib/utils_poly.py**
+**7. modules/utils_poly.py**
 
 This module consists of polynomial interpolation and evaluation functions. These functions are defined general
 enough to work on any type of ring elements such as integer rings, polynomial rings, etc. In other words, the input
 type is only required to have addition and multiplication operations implemented, and the designer of the input
 type is given complete freedom to build those operations.
 
-**8. lib/pkenc_paillier.py**
+**8. modules/pkenc_paillier.py**
 
 This module contains the class that implements the [Paillier cryptosystem](http://en.wikipedia.org/wiki/Paillier_cryptosystem).
 Also defined in this module is a class for Paillier ciphertexts that abstract away the homomorphic properties of
 the Paillier cryptosystem.
 
-**9. lib/pkenc_elgamal.py**
+**9. modules/pkenc_elgamal.py**
 
 This module provides the class that implements a variant of the [ElGamal cryptosystem](http://en.wikipedia.org/wiki/ElGamal)
 that provides the homorphic properties required for oblivious polynomial evaluations. More specifically, the encryption of
