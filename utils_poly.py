@@ -3,6 +3,18 @@ __author__ = 'Milinda Perera'
 from charm.toolbox.integergroup import integer
 
 
+def poly_from_roots(roots, neg_one, one):
+    """
+    Interpolates the unique polynomial that encodes the given roots.
+    The function also requires the one and the negative one of the underlying ring.
+    """
+    zero = one + neg_one
+    coefs = [neg_one * roots[0], one]
+    for r in roots[1:]:
+        coefs = poly_mul(coefs, [neg_one * r, one], zero)
+    return coefs
+
+
 def poly_eval(coefs, x):
     """
     Evaluates the polynomial whose coefficients are given in coefs on the value x.
@@ -40,22 +52,8 @@ def poly_mul(coefs1, coefs2, zero):
     return coefs3
 
 
-def poly_from_roots(roots, neg_one, one):
-    """
-    Interpolates the unique polynomial that encodes the given roots.
-    The function also requires the one and the negative one of the underlying ring.
-    """
-    zero = one + neg_one
-    coefs = [neg_one * roots[0], one]
-    for r in roots[1:]:
-        coefs = poly_mul(coefs, [neg_one * r, one], zero)
-    return coefs
-
-
 def poly_print(coefs):
-    """
-    Prints the polynomial whose coefficients are given in coefs in human readable form.
-    """
+    """Prints the polynomial whose coefficients are given in coefs in human readable form."""
     out = [poly_coef_to_str(int(coefs[i]), i) for i in range(len(coefs)) if coefs[i] != 0]
     out.reverse()
     if out[0][0] == '+':
@@ -64,9 +62,7 @@ def poly_print(coefs):
 
 
 def poly_coef_to_str(coef, degree):
-    """
-    A helper function for poly_print.
-    """
+    """A helper function for poly_print."""
     out = []
     if coef < 0:
         out.append('-')
@@ -89,7 +85,7 @@ def test_poly():
 
     roots = [2, 3, 4, 5]
     roots = map(integer, roots)
-    coefs = poly_from_roots(roots, 1, -1)
+    coefs = poly_from_roots(roots, -1, 1)
     eval1 = poly_eval(coefs, 3)
     eval2 = poly_eval_horner(coefs, 3)
     poly_print(coefs)
