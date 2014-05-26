@@ -63,3 +63,9 @@ that provides the homorphic properties required for oblivious polynomial evaluat
 a message `m` maps it to the group element `g^m`. This allows one to perform homomorphic addition and multiplication (by a constant)
 in the exponent. Unfortunately, this mapping makes it hard to decrypt ciphertexts efficiently. Nevertheless, it suffices for
 our purposes.
+
+**9. unittests.py**
+
+This script consists of the unit tests created for testing purposes. One can run this script by executing the following command.
+
+`python unittests.py`

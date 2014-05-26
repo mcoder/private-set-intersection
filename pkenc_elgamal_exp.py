@@ -5,6 +5,10 @@ from charm.toolbox.eccurve import prime192v2
 
 
 class ElGamalExp(object):
+    """
+    Implements the ElGamal cryptosystem where messages are encoded in the exponent.
+    """
+
     def keygen(self):
         group = ECGroup(prime192v2)
         g = group.random(G)
@@ -32,6 +36,10 @@ class ElGamalExp(object):
 
 
 class Cipher(object):
+    """
+    This class abstracts the homomorphic operations of the Paillier ciphertexts.
+    """
+
     def __init__(self, c1, c2, pk):
         self.c1 = c1
         self.c2 = c2

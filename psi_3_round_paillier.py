@@ -7,13 +7,20 @@ from utils_poly import poly_eval_horner, poly_from_roots
 
 
 class PSI3RoundPaillier(object):
+    """
+    Implements the 3-round PSI protocol based on Paillier cryptosystem
+    """
+
     def __init__(self, sec_param):
         self.sec_param = sec_param
 
     def server_to_client_1(self, server_set):
+        # Initialize the cryptosystem.
         enc_scheme = Paillier()
         pk, sk = enc_scheme.keygen(self.sec_param)
 
+        # Map the server set to the ring of Paillier ciphertexts, interpolate the unique
+        # polynomial representing the set, and encrypt its coefficients.
         server_set_mapped = [integer(a, pk['n']) for a in server_set]
         coefs = poly_from_roots(server_set_mapped, integer(-1, pk['n']), integer(1, pk['n']))
         coef_cts = [enc_scheme.encrypt(pk, c) for c in coefs]
@@ -24,6 +31,7 @@ class PSI3RoundPaillier(object):
         return out, server_state
 
     def client_to_server(self, client_set, pk, coef_cts):
+        # Evaluate the polynomial on each element of the client set.
         eval_cts = [poly_eval_horner(coef_cts, e) * random(pk['n']) + e for e in client_set]
 
         return eval_cts

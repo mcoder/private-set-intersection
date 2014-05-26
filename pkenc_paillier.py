@@ -4,6 +4,10 @@ from charm.toolbox.integergroup import randomPrime, random, isPrime, lcm, gcd, i
 
 
 class Paillier(object):
+    """
+    Implements the Paillier cryptosystem.
+    """
+
     def L(self, u, n):
         return integer(int(u) - 1) / n
 
@@ -35,6 +39,10 @@ class Paillier(object):
 
 
 class Cipher(object):
+    """
+    This class abstracts the homomorphic operations of the Paillier ciphertexts.
+    """
+
     def __init__(self, c, pk):
         self.c = c
         self.pk = pk

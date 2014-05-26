@@ -3,6 +3,7 @@ __author__ = 'Milinda Perera'
 import unittest
 
 from utils_poly import poly_from_roots, poly_eval, poly_eval_horner, poly_mul, poly_print
+from pkenc_elgamal_exp import ElGamalExp
 
 
 class Test_utils_poly(unittest.TestCase):
@@ -84,6 +85,29 @@ class Test_utils_poly(unittest.TestCase):
         for (coefs, string) in cases:
             result = poly_print(coefs)
             self.assertEqual(string, result, output.format(coefs, string, result))
+
+
+class Test_pkenc_elgamal_exp(unittest.TestCase):
+    def test_1_enc(self):
+        """Tests ElGamal encryption function."""
+
+        output = "poly_from_roots failed on {0}.\nNeeded {1}, got {2}."
+
+        enc_scheme = ElGamalExp()
+        pk, sk = enc_scheme.keygen()
+
+        # Each test case is (roots, coefs)
+        cases = [([2, 3, 4, 5], [120, -154, 71, -14, 1]),
+                 ([0], [0, 1]),
+                 ([-1], [1, 1])]
+
+        for (roots, coefs) in cases:
+            result = poly_from_roots(roots, -1, 1)
+            self.assertListEqual(coefs, result, output.format(roots, coefs, result))
+
+
+class Test_pkenc_paillier(unittest.TestCase):
+    pass
 
 
 if __name__ == '__main__':
