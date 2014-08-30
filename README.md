@@ -7,7 +7,7 @@ a server and a client, need to privately compute an intersection of their respec
 In doing so, one or both parties must obtain the intersection, while neither should learn any information
 about the other set.
 
-This library implements three private set intersection (PSI) protocols based on oblivious polynomials evaluations and
+This library implements three private set intersection (PSI) protocols based on oblivious polynomial evaluations and
 interpolations. At the completion of each of these protocols, only the client learns the intersection.
 The protocols are,
 
